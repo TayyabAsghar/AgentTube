@@ -4,13 +4,15 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import AgentPulse from "@/components/AgentPulse";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
 
 const Header = () => {
+  const { isSignedIn } = useUser();
+
   return (
     <header
       className="px-6 h-12 z-50 sticky top-0 flex items-center justify-between md:grid md:grid-cols-3 gap-4 border-b backdrop-blur 
-    bg-white border-solid border-gray-300"
+     border-solid border-gray-200"
     >
       <h1 className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium text-black h-9 justify-self-start">
         <Link
@@ -18,11 +20,11 @@ const Header = () => {
           className="sm:text-lg font-semibold flex items-center gap-2"
         >
           <AgentPulse size="small" color="blue" />
-          AgentTube
+          <div className="">AgentTube</div>
         </Link>
       </h1>
 
-      <div className="flex items-center justify-center gap-3 opacity-70">
+      <div className="flex items-center justify-center gap-3 opacity-80">
         <Button asChild variant="ghost">
           <Link href="/">Features</Link>
         </Button>
@@ -31,7 +33,7 @@ const Header = () => {
         </Button>
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-3">
         <ThemeSwitcher />
 
         <SignedIn>
@@ -44,11 +46,11 @@ const Header = () => {
           </div>
         </SignedIn>
 
-        <SignedOut>
+        {!isSignedIn && (
           <Button asChild variant="ghost" className="hover:text-black">
             <Link href="/">Sign in</Link>
           </Button>
-        </SignedOut>
+        )}
       </div>
     </header>
   );

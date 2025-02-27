@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const ThemeSwitcher = () => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
     if (
@@ -36,6 +36,7 @@ const ThemeSwitcher = () => {
     <Button
       variant="ghost"
       onClick={toggleTheme}
+      tooltip={theme === "dark" ? "Light Mod" : "Dark Mod"}
       className="rounded-lg p-2 cursor-pointer"
     >
       <svg
