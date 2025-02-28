@@ -2,7 +2,7 @@ import Steps from "@/lib/constants/steps";
 
 const HowItWorksSection = () => {
   return (
-    <section className="p-18 py-28 mt-12 bg-gradient-to-bl from-blue-300 to-blue-700">
+    <section className="p-10 py-28 mt-12 bg-gradient-to-bl from-blue-300 to-blue-700">
       <h2 className="text-3xl text-white font-[500] text-center">
         Meet your AI Agent in 3 Simple Steps
       </h2>
@@ -11,7 +11,7 @@ const HowItWorksSection = () => {
         {Steps.map((step, index) => (
           <li
             key={index}
-            className="flex items-center gap-4 p-4 md:p-6 lg:p-8 bg-white bg-opacity-90 rounded-lg hover:shadow-lg"
+            className="flex items-center gap-4 p-4 md:p-6 lg:p-8 bg-white bg-opacity-90 rounded-lg"
           >
             <div className="bg-gradient-to-bl from-blue-300 to-blue-700 self-start text-xl text-white w-fit p-4 rounded-md">
               <step.icon />

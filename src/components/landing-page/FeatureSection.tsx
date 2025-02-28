@@ -2,7 +2,7 @@ import Features from "@/lib/constants/features";
 
 const FeatureSection = () => {
   return (
-    <section className="py-20 px-20">
+    <section className="p-20">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12">
           Powerful Features for Content Creators
@@ -13,7 +13,7 @@ const FeatureSection = () => {
         {Features.map((feature, index) => (
           <div
             key={index}
-            className={`flex flex-col justify-center items-center md:p-8 lg:p-14 
+            className={`flex flex-col justify-start items-center md:p-8 lg:p-14 
                 ${index >= 3 ? "md:border-t md:border-gray-200" : ""} 
                 ${index % 3 !== 0 ? "md:border-l md:border-gray-200" : ""}`}
           >

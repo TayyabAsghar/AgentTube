@@ -1,4 +1,5 @@
 import AgentPulse from "@/components/AgentPulse";
+import Footer from "@/components/landing-page/Footer";
 import FeatureSection from "@/components/landing-page/FeatureSection";
 import HowItWorksSection from "@/components/landing-page/HowItWorksSection";
 
@@ -28,6 +29,8 @@ const Home = () => {
       <FeatureSection />
 
       <HowItWorksSection />
+
+      <Footer />
     </div>
   );
 };

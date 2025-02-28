@@ -42,13 +42,10 @@ const Header = () => {
             <UserButton />
           </div>
         </SignedIn>
-        <Button>dfdfd</Button>
 
         {!isSignedIn && (
-          <Button asChild variant="ghost" className="hover:text-black">
-            <Link href="/" className="">
-              Sign in
-            </Link>
+          <Button asChild className="">
+            <Link href="/">Sign in</Link>
           </Button>
         )}
       </div>
