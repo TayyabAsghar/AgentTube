@@ -1,7 +1,9 @@
 import "./globals.css";
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import { Geist, Geist_Mono } from "next/font/google";
+import SuspenseLoader from "@/components/SuspenseLoader";
 import ClientWrapper from "@/components/wrappers/ClientWrapper";
 
 const geistSans = Geist({
@@ -31,8 +33,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col`}
       >
         <ClientWrapper>
-          <Header />
-          <main>{children}</main>
+          <Suspense fallback={<SuspenseLoader />}>
+            <Header />
+            <main>{children}</main>
+          </Suspense>
         </ClientWrapper>
       </body>
     </html>

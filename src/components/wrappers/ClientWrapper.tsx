@@ -15,7 +15,7 @@ const ClientWrapper = ({ children }: ClientWrapperProps) => {
     throw new Error("No Schematic Publishable Key found.");
 
   return (
-    <ClerkProvider>
+    <ClerkProvider afterSignOutUrl="/">
       <SchematicProvider publishableKey={schematicPublishKey}>
         <SchematicWrapper>{children}</SchematicWrapper>
       </SchematicProvider>
