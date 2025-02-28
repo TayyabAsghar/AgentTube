@@ -34,7 +34,7 @@ const ThemeSwitcher = () => {
 
   return (
     <Button
-      variant="ghost"
+      variant="secondary"
       onClick={toggleTheme}
       tooltip={theme === "dark" ? "Light Mod" : "Dark Mod"}
       className="rounded-lg p-2 cursor-pointer"

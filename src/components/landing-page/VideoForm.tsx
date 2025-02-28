@@ -14,7 +14,7 @@ const VideoForm = () => {
           name="url"
           type="text"
           placeholder="Enter Youtube URL"
-          className="w-full flex-1 px-4 py-2"
+          className="w-full flex-1 px-4 py-2 bg-accent"
         />
         <AnalyzeButton />
       </Form>

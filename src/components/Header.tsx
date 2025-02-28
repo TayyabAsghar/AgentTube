@@ -26,7 +26,7 @@ const Header = () => {
 
       <div className="flex items-center justify-center gap-3 opacity-80">
         <Button asChild variant="ghost">
-          <Link href="/">Features</Link>
+          <Link href="#features">Features</Link>
         </Button>
         <Button asChild variant="ghost">
           <Link href="/">Pricing</Link>
