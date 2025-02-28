@@ -1,3 +1,4 @@
+import colors from "tailwindcss/colors";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -8,7 +9,11 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      color: {
+        primary: colors.blue,
+      },
+    },
   },
   plugins: [],
 };

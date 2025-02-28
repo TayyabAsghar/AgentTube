@@ -1,8 +1,32 @@
-export default function Home() {
+import AgentPulse from "@/components/AgentPulse";
+import FeatureSection from "@/components/FeatureSection";
+
+const Home = () => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start"></main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center"></footer>
+    <div className="min-h-screen">
+      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+        <div className=" container mx-auto px-4 mt-14">
+          <div className="flex flex-col items-center gap-10 text-center mb-12">
+            <AgentPulse size="medium" color="blue" />
+
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+              Meet Your Personal{" "}
+              <span className="bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+                AI Content Agent
+              </span>
+            </h1>
+
+            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+              Transform your video content with AI-powered analysis,
+              transcription, and insights. Get started in seconds.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <FeatureSection />
     </div>
   );
-}
+};
+
+export default Home;

@@ -10,17 +10,14 @@ const Header = () => {
   const { isSignedIn } = useUser();
 
   return (
-    <header
-      className="px-6 h-12 z-50 sticky top-0 flex items-center justify-between md:grid md:grid-cols-3 gap-4 border-b backdrop-blur 
-     border-solid border-gray-200"
-    >
-      <h1 className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium text-black h-9 justify-self-start">
+    <header className="px-4 h-12 w-[90vw] left-1/2 transform -translate-x-1/2 z-50 fixed top-6 flex items-center justify-between md:grid md:grid-cols-3 gap-4 backdrop-blur">
+      <h1 className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium h-9 justify-self-start">
         <Link
           href="/"
           className="sm:text-lg font-semibold flex items-center gap-2"
         >
           <AgentPulse size="small" color="blue" />
-          <div className="">AgentTube</div>
+          <div>AgentTube</div>
         </Link>
       </h1>
 
@@ -45,10 +42,13 @@ const Header = () => {
             <UserButton />
           </div>
         </SignedIn>
+        <Button>dfdfd</Button>
 
         {!isSignedIn && (
           <Button asChild variant="ghost" className="hover:text-black">
-            <Link href="/">Sign in</Link>
+            <Link href="/" className="">
+              Sign in
+            </Link>
           </Button>
         )}
       </div>
