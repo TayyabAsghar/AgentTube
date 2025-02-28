@@ -10,7 +10,10 @@ const Header = () => {
   const { isSignedIn } = useUser();
 
   return (
-    <header className="px-4 h-12 w-[90vw] left-1/2 transform -translate-x-1/2 z-50 fixed top-6 flex items-center justify-between md:grid md:grid-cols-3 gap-4 backdrop-blur">
+    <header
+      className="px-4 h-12 w-[90vw] left-1/2 transform -translate-x-1/2 z-50 fixed top-6 flex items-center justify-between 
+    rounded-3xl md:grid md:grid-cols-3 gap-4 backdrop-blur"
+    >
       <h1 className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium h-9 justify-self-start">
         <Link
           href="/"
