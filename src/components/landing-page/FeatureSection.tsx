@@ -1,4 +1,4 @@
-import Features from "@/utils/constants/features";
+import Features from "@/lib/constants/features";
 
 const FeatureSection = () => {
   return (

@@ -9,7 +9,7 @@ import {
   ChartNoAxesCombined,
 } from "lucide-react";
 
-type FeatureList = {
+type FeatureType = {
   title: string;
   description: string;
   bgColor: string;
@@ -18,7 +18,7 @@ type FeatureList = {
   >;
 };
 
-const Features: FeatureList[] = [
+const Features: FeatureType[] = [
   {
     title: "AI Video Insights",
     description:

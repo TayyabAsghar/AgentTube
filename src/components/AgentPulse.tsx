@@ -10,7 +10,7 @@ const AgentPulse = ({ size = "small", color = "blue" }: AgentPulseProps) => {
     large: { outer: "size-16", inner: "size-8" },
   };
   const colorClasses = {
-    blue: { outer: "bg-blue-100", inner: "bg-blue-600" },
+    blue: { outer: "bg-blue-100", inner: "bg-blue-700" },
     green: { outer: "bg-emerald-100", inner: "bg-green-600" },
     purple: { outer: "bg-fuchsia-100", inner: "bg-purple-600" },
   };

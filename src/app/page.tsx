@@ -1,5 +1,6 @@
 import AgentPulse from "@/components/AgentPulse";
-import FeatureSection from "@/components/FeatureSection";
+import FeatureSection from "@/components/landing-page/FeatureSection";
+import HowItWorksSection from "@/components/landing-page/HowItWorksSection";
 
 const Home = () => {
   return (
@@ -11,7 +12,7 @@ const Home = () => {
 
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
               Meet Your Personal{" "}
-              <span className="bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-blue-700 to-blue-400 bg-clip-text text-transparent">
                 AI Content Agent
               </span>
             </h1>
@@ -25,6 +26,8 @@ const Home = () => {
       </section>
 
       <FeatureSection />
+
+      <HowItWorksSection />
     </div>
   );
 };
