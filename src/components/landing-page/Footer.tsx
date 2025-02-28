@@ -27,7 +27,7 @@ const Footer = () => {
   );
 
   return (
-    <footer className="p-20 bg-gradient-to-b from-white to-gray-200">
+    <footer className="p-20 bg-accent">
       <div className="flex justify-between items-center gap-18 flex-col-reverse md:gap-6 md:items-start md:flex-row">
         <div className="flex flex-col gap-8 min-w-72">
           <div>
@@ -35,7 +35,7 @@ const Footer = () => {
               <AgentPulse />
               <h2 className="inline text-xl font-semibold">AgentTube</h2>
             </div>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-sm text-accent-foreground opacity-60 mt-1">
               Meet your Personal AI Content Agent
             </p>
           </div>
@@ -43,25 +43,25 @@ const Footer = () => {
           <div className="flex gap-4">
             <SocialButton tooltip="X">
               <Link href="/">
-                <XIcon className="text-white" />
+                <XIcon className="text-accent" />
               </Link>
             </SocialButton>
 
             <SocialButton tooltip="Instagram">
               <Link href="/">
-                <InstagramIcon className="text-white" />
+                <InstagramIcon className="text-accent" />
               </Link>
             </SocialButton>
 
             <SocialButton tooltip="Youtube">
               <Link href="/">
-                <YouTubeIcon className="text-white" />
+                <YouTubeIcon className="text-accent" />
               </Link>
             </SocialButton>
 
             <SocialButton tooltip="Github">
               <Link href="/">
-                <GitHubIcon className="text-white" />
+                <GitHubIcon className="text-accent" />
               </Link>
             </SocialButton>
           </div>
@@ -78,7 +78,7 @@ const Footer = () => {
           <p className="text-xl">
             Join Creators leveraging AI to unlock content insights
           </p>
-          <blockquote className="mt-12 max-w-2xl mx-auto border-l-2 border-black/40 pl-6 italic">
+          <blockquote className="mt-12 max-w-2xl mx-auto border-l-2 border-accent-foreground/40 pl-6 italic">
             <p className="text-lg">
               “I have using AgentTube&apos;s AI analysis for months and it has
               transformed how I create content.”

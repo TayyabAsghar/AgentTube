@@ -11,14 +11,16 @@ const HowItWorksSection = () => {
         {Steps.map((step, index) => (
           <li
             key={index}
-            className="flex items-center gap-4 p-4 md:p-6 lg:p-8 bg-white bg-opacity-90 rounded-lg"
+            className="flex items-center gap-4 p-4 md:p-6 lg:p-8 bg-accent bg-opacity-90 rounded-lg"
           >
             <div className="bg-gradient-to-bl from-blue-300 to-blue-700 self-start text-xl text-white w-fit p-4 rounded-md">
               <step.icon />
             </div>
             <div className="self-start">
               <h3 className="font-semibold">{step.title}</h3>
-              <p className="text-gray-500 text-sm">{step.description}</p>
+              <p className="text-accent-foreground opacity-60 text-sm">
+                {step.description}
+              </p>
             </div>
           </li>
         ))}
