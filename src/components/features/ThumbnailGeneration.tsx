@@ -3,7 +3,9 @@
 import Image from "next/image";
 import Usage from "@/components/Usage";
 import { useUser } from "@clerk/nextjs";
+import { useQuery } from "convex/react";
 import { FeatureFlag } from "@/lib/flags";
+import { api } from "../../../convex/_generated/api";
 
 interface ThumbnailGenerationProps {
   videoId: string;
@@ -12,7 +14,10 @@ interface ThumbnailGenerationProps {
 const ThumbnailGeneration = ({ videoId }: ThumbnailGenerationProps) => {
   const { user } = useUser();
 
-  const images = []; // TODO: Pull from convex db
+  const images = useQuery(api.images.getImages, {
+    videoId,
+    userId: user?.id || "",
+  });
 
   return (
     <div className="rounded-xl flex flex-col p-4 border">

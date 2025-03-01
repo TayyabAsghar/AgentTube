@@ -1,8 +1,8 @@
 "use client";
 
-import { ClerkProvider } from "@clerk/nextjs";
 import { SchematicProvider } from "@schematichq/schematic-react";
 import SchematicWrapper from "@/components/wrappers/SchematicWrapper";
+import ConvexWrapper from "@/components/wrappers/ConvexWrapper";
 
 interface ClientWrapperProps {
   children: React.ReactNode;
@@ -15,11 +15,11 @@ const ClientWrapper = ({ children }: ClientWrapperProps) => {
     throw new Error("No Schematic Publishable Key found.");
 
   return (
-    <ClerkProvider afterSignOutUrl="/">
+    <ConvexWrapper>
       <SchematicProvider publishableKey={schematicPublishKey}>
         <SchematicWrapper>{children}</SchematicWrapper>
       </SchematicProvider>
-    </ClerkProvider>
+    </ConvexWrapper>
   );
 };
 
