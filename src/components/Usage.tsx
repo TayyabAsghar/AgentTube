@@ -103,11 +103,13 @@ const Usage = ({ featureFlag, title }: UsageProps) => {
           <p className="text-sm text-red-600 mt-2">
             You have reached your usage limit
           </p>
-        ) : progress >= 80 ? (
-          <p className="text-sm text-red-600 mt-2">
-            Warning: You are approaching your usage limit
-          </p>
-        ) : null}
+        ) : (
+          progress >= 80 && (
+            <p className="text-sm text-red-600 mt-2">
+              Warning: You are approaching your usage limit
+            </p>
+          )
+        )}
       </div>
     </div>
   );

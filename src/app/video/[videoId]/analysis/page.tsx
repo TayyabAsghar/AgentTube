@@ -3,6 +3,7 @@
 import Usage from "@/components/Usage";
 import { FeatureFlag } from "@/lib/flags";
 import { useParams } from "next/navigation";
+import Transcription from "@/components/features/Transcription";
 import TitleGeneration from "@/components/features/TitleGeneration";
 import YoutubeVideoDetails from "@/components/features/YoutubeVideoDetails";
 import ThumbnailGeneration from "@/components/features/ThumbnailGeneration";
@@ -27,10 +28,10 @@ const AnalysisPage = () => {
           <ThumbnailGeneration videoId={videoId} />
 
           <TitleGeneration videoId={videoId} />
-          {/* Transcription */}
+
+          <Transcription videoId={videoId} />
         </div>
 
-        {/* Right Side */}
         <div className="order-1 lg:order-2 lg:sticky lg:top-20 h-[500px] md:h-[calc(100vh-6rem)]">
           {/* AI Agent Chat Section */}
           <p>Chat</p>
