@@ -1,6 +1,7 @@
 "use client";
 
 import { FeatureFlag } from "@/lib/flags";
+import Spinner from "@/components/Spinner";
 import { Progress } from "@/components/ui/progress";
 import {
   useSchematicIsPending,
@@ -23,7 +24,7 @@ const Usage = ({ featureFlag, title }: UsageProps) => {
   const hasUsedAllTokens =
     featureUsage && featureAllocation && featureUsage >= featureAllocation;
 
-  if (isPending) return <div>Loading</div>;
+  if (isPending) return <Spinner />;
 
   if (hasUsedAllTokens)
     return (

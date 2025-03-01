@@ -1,6 +1,9 @@
+"use client";
+
 import Usage from "@/components/Usage";
 import { FeatureFlag } from "@/lib/flags";
 import { useParams } from "next/navigation";
+import YoutubeVideoDetails from "@/components/YoutubeVideoDetails";
 
 const AnalysisPage = () => {
   const params = useParams<{ videoId: string }>();
@@ -16,11 +19,11 @@ const AnalysisPage = () => {
               title="Analyze Video"
             />
           </div>
-          {/* Youtube video details */}
+
+          <YoutubeVideoDetails videoId={videoId} />
           {/* Thumbnail Generation */}
           {/* Title Generation */}
           {/* Transcription */}
-          <p>Cool stuff</p>
         </div>
 
         {/* Right Side */}
