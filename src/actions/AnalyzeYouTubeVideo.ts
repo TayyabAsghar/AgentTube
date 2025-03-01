@@ -10,6 +10,14 @@ const AnalyzeYouTubeVideo = async (form: FormData) => {
 
   const videoId = getYouTubeVideoId(url);
 
+  if (!videoId)
+    return {
+      error: {
+        title: "Invalid Link",
+        description: "Provided youtube link is invalid.",
+      },
+    };
+
   redirect(`/video/${videoId}/analysis`);
 };
 

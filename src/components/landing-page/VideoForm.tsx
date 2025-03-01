@@ -6,22 +6,21 @@ import { useFormStatus } from "react-dom";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import AnalyzeVideo from "@/actions/AnalyzeYouTubeVideo";
+import AnalyzeYouTubeVideo from "@/actions/AnalyzeYouTubeVideo";
 
 const VideoForm = () => {
   const { toast } = useToast();
   const { pending } = useFormStatus();
 
-  const submitUrl = (form: FormData) => {
-    try {
-      AnalyzeVideo(form);
-    } catch {
+  const submitUrl = async (form: FormData) => {
+    const response = await AnalyzeYouTubeVideo(form);
+
+    if (response?.error)
       toast({
-        title: "Invalid Link",
-        description: "Provided youtube link is invalid.",
+        title: response?.error.title,
+        description: response?.error.description,
         variant: "destructive",
       });
-    }
   };
 
   return (

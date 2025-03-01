@@ -13,14 +13,13 @@
 
 // export default getVideoId;
 
-const getYouTubeVideoId = (url: string): string => {
+const getYouTubeVideoId = (url: string) => {
   const youtubeRegex =
     /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
 
   const match = url.match(youtubeRegex);
 
-  if (!match || !match[5])
-    throw new Error("Invalid YouTube URL or no video ID found.");
+  if (!match || !match[5]) return null;
 
   return match[5];
 };

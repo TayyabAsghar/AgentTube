@@ -36,7 +36,9 @@ export default function RootLayout({
         <ClientWrapper>
           <Suspense fallback={<SuspenseLoader />}>
             <Header />
-            <main className="w-full min-h-screen bg-accent/60">{children}</main>
+            <main className="w-full min-h-screen bg-accent/60 pt-18">
+              {children}
+            </main>
             <Toaster />
           </Suspense>
         </ClientWrapper>
