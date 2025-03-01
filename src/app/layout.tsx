@@ -2,6 +2,7 @@ import "./globals.css";
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import Header from "@/components/Header";
+import { Toaster } from "@/components/ui/toaster";
 import { Geist, Geist_Mono } from "next/font/google";
 import SuspenseLoader from "@/components/SuspenseLoader";
 import ClientWrapper from "@/components/wrappers/ClientWrapper";
@@ -36,6 +37,7 @@ export default function RootLayout({
           <Suspense fallback={<SuspenseLoader />}>
             <Header />
             <main className="w-full min-h-screen bg-accent/60">{children}</main>
+            <Toaster />
           </Suspense>
         </ClientWrapper>
       </body>
