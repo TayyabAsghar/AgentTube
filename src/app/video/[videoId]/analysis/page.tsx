@@ -3,6 +3,7 @@
 import Usage from "@/components/Usage";
 import { FeatureFlag } from "@/lib/flags";
 import { useParams } from "next/navigation";
+import TitleGeneration from "@/components/features/TitleGeneration";
 import YoutubeVideoDetails from "@/components/features/YoutubeVideoDetails";
 import ThumbnailGeneration from "@/components/features/ThumbnailGeneration";
 
@@ -24,7 +25,8 @@ const AnalysisPage = () => {
           <YoutubeVideoDetails videoId={videoId} />
 
           <ThumbnailGeneration videoId={videoId} />
-          {/* Title Generation */}
+
+          <TitleGeneration videoId={videoId} />
           {/* Transcription */}
         </div>
 
