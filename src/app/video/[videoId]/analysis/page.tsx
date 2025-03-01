@@ -3,8 +3,8 @@
 import Usage from "@/components/Usage";
 import { FeatureFlag } from "@/lib/flags";
 import { useParams } from "next/navigation";
-import YoutubeVideoDetails from "@/components/YoutubeVideoDetails";
-import ThumbnailGeneration from "@/components/ThumbnailGeneration";
+import YoutubeVideoDetails from "@/components/features/YoutubeVideoDetails";
+import ThumbnailGeneration from "@/components/features/ThumbnailGeneration";
 
 const AnalysisPage = () => {
   const params = useParams<{ videoId: string }>();
