@@ -30,12 +30,12 @@ const YoutubeVideoDetails = ({ videoId }: { videoId: string }) => {
       }
     };
 
-    // fetchVideoDetails();
+    fetchVideoDetails();
   }, [videoId]);
 
   if (!video && !error) return <Spinner />;
 
-  if (error) return <>Error is here</>;
+  if (!video || error) return <>Error is here</>;
 
   return (
     <div className="@container bg-white rounded-xl">

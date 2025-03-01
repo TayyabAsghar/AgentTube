@@ -20,6 +20,9 @@ const Transcription = ({ videoId }: TranscriptionProps) => {
     cache: string;
   } | null>(null);
 
+  console.log(setTranscript);
+  console.log(videoId);
+
   const { featureUsageExceeded } = useSchematicEntitlement(
     FeatureFlag.TRANSCRIPTION
   );

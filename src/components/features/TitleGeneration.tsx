@@ -3,8 +3,8 @@
 import Usage from "@/components/Usage";
 import { useUser } from "@clerk/nextjs";
 import { FeatureFlag } from "@/lib/flags";
-import { useToast } from "@/hooks/use-toast";
-import { CheckCircleIcon, Copy } from "lucide-react";
+// import { useToast } from "@/hooks/use-toast";
+// import { CheckCircleIcon, Copy } from "lucide-react";
 import { useSchematicEntitlement } from "@schematichq/schematic-react";
 
 interface TitleGenerationProps {
@@ -12,28 +12,32 @@ interface TitleGenerationProps {
 }
 
 const TitleGeneration = ({ videoId }: TitleGenerationProps) => {
-  const titles = [];
+  const titles = [""];
   const { user } = useUser();
-  const { toast } = useToast();
+  //   const { toast } = useToast();
   const { value: isTitleGenerationEnabled } = useSchematicEntitlement(
     FeatureFlag.TITLE_GENERATIONS
   );
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    toast({
-      description: (
-        <div>
-          <h2 className="font-semibold text-md">
-            <span>
-              <CheckCircleIcon className="h-6 w-6 mr-2 text-green-500 inline" />
-            </span>
-            Copied to clipboard!
-          </h2>
-        </div>
-      ),
-    });
-  };
+  console.log(titles);
+  console.log(user);
+  console.log(videoId);
+
+  //   const copyToClipboard = (text: string) => {
+  //     navigator.clipboard.writeText(text);
+  //     toast({
+  //       description: (
+  //         <div>
+  //           <h2 className="font-semibold text-md">
+  //             <span>
+  //               <CheckCircleIcon className="h-6 w-6 mr-2 text-green-500 inline" />
+  //             </span>
+  //             Copied to clipboard!
+  //           </h2>
+  //         </div>
+  //       ),
+  //     });
+  //   };
 
   return (
     <div className="p-4 border border-gray-200 rounded-xl bg-white shadow-sm">
@@ -42,24 +46,25 @@ const TitleGeneration = ({ videoId }: TitleGenerationProps) => {
       </div>
 
       <div className="space-y-3 mt-4 max-h-[280px] overflow-y-auto">
-        {titles?.map((title) => (
+        {titles?.map((title, index) => (
           <div
-            key={title._id}
+            // key={title._id}
+            key={index}
             className="group relative p-4 rounded-lg border border-gray-100 bg-gray-50 hover:border-blue-100 hover:bg-blue-50 
             transition-all duration-200"
           >
             <div className="flex items-start justify-between gap-4">
               <p className="text-sm text-gray-900 leading-relaxed">
-                {title.title}
+                {/* {title.title} */}
               </p>
 
-              <button
+              {/* <button
                 onClick={() => copyToClipboard(title.title)}
                 className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1.5 hover:bg-blue-100 rounded-md"
                 title="Copy to clipboard"
               >
                 <Copy className="w-4 h-4 text-blue-600" />
-              </button>
+              </button> */}
             </div>
           </div>
         ))}
