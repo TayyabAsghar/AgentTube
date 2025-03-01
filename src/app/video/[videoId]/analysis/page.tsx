@@ -4,6 +4,7 @@ import Usage from "@/components/Usage";
 import { FeatureFlag } from "@/lib/flags";
 import { useParams } from "next/navigation";
 import YoutubeVideoDetails from "@/components/YoutubeVideoDetails";
+import ThumbnailGeneration from "@/components/ThumbnailGeneration";
 
 const AnalysisPage = () => {
   const params = useParams<{ videoId: string }>();
@@ -21,7 +22,8 @@ const AnalysisPage = () => {
           </div>
 
           <YoutubeVideoDetails videoId={videoId} />
-          {/* Thumbnail Generation */}
+
+          <ThumbnailGeneration videoId={videoId} />
           {/* Title Generation */}
           {/* Transcription */}
         </div>
