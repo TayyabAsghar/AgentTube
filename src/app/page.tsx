@@ -6,7 +6,7 @@ import HowItWorksSection from "@/components/landing-page/HowItWorksSection";
 
 const Home = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen absolute top-0">
       <BackgroundAnimation />
 
       <HeroSection />

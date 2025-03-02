@@ -13,3 +13,14 @@ export interface VideoDetails {
   channel: ChannelDetails;
   publishedAt: string;
 }
+
+export interface ToolInvocation {
+  toolName: string;
+  toolCallId: string;
+  result?: Record<string, unknown>;
+}
+
+export interface ToolPart {
+  type: "tool-invocation";
+  toolInvocation: ToolInvocation;
+}
