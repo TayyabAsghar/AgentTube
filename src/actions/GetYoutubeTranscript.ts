@@ -1,7 +1,9 @@
 import { Innertube } from "youtubei.js";
+import { client } from "@/lib/schematics";
+import { ConvexHttpClient } from "convex/browser";
 import { api } from "../../convex/_generated/api";
 import { currentUser } from "@clerk/nextjs/server";
-import { ConvexHttpClient } from "convex/browser";
+import { FeatureFlag, featureFlagEvents } from "@/lib/flags";
 
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 export interface TranscriptEntry {
@@ -51,9 +53,36 @@ export const GetYoutubeTranscript = async (videoId: string) => {
     { videoId, userId: user.id }
   );
 
-  const transcript = await fetchTranscript(videoId);
+  if (existingTranscript)
+    return {
+      cache:
+        "This video has already been transcribed - Accessing cached transcript instead of using a token",
+      transcript: existingTranscript.transcript,
+    };
 
-  // Save to database
+  try {
+    const transcript = await fetchTranscript(videoId);
+    await convex.mutation(api.transcript.storeTranscript, {
+      videoId,
+      userId: user.id,
+      transcript,
+    });
 
-  return { transcript, cache: "This was not cashed." };
+    await client.track({
+      event: featureFlagEvents[FeatureFlag.TRANSCRIPTION].event,
+      company: { id: user.id },
+      user: { id: user.id },
+    });
+
+    return {
+      transcript,
+      cache:
+        "this video is transcribed using a token, the transcript is now saved in the database.",
+    };
+  } catch {
+    return {
+      transcript: [],
+      cache: "Error fetching the transcript.",
+    };
+  }
 };
