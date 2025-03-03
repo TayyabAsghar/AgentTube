@@ -13,7 +13,7 @@ const AnalyzeYouTubeVideo = async (form: FormData) => {
   if (!videoId)
     return {
       error: {
-        title: "Invalid Link",
+        title: "Invalid  Link",
         description: "Provided youtube link is invalid.",
       },
     };
