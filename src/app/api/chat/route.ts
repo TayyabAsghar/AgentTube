@@ -1,12 +1,12 @@
 import { streamText } from "ai";
 import { currentUser } from "@clerk/nextjs/server";
+import generateTitle from "@/ai-tools/GenerateTitle";
+import generateImage from "@/ai-tools/GenerateImage";
 import { NextRequest, NextResponse } from "next/server";
 import GetVideoDetails from "@/actions/GetVideoDetails";
 import fetchTranscript from "@/ai-tools/FetchTranscript";
-import { generateImage } from "@/ai-tools/GenerateImage";
+import getVideoDetails from "@/ai-tools/GetVideoDeatils";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { getVideoDetails } from "@/ai-tools/GetVideoDeatils";
-import generateTitle from "@/ai-tools/GenerateTitle";
 
 export const POST = async (req: NextRequest) => {
   const user = await currentUser();

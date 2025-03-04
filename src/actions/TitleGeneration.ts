@@ -1,11 +1,12 @@
 "use server";
 
-import OpenAI from "openai";
-import { getConvexClient } from "@/lib/convex";
-import { currentUser } from "@clerk/nextjs/server";
-import { api } from "../../convex/_generated/api";
+import { streamText } from "ai";
 import { client } from "@/lib/schematics";
+import { getConvexClient } from "@/lib/convex";
+import { api } from "../../convex/_generated/api";
+import { currentUser } from "@clerk/nextjs/server";
 import { FeatureFlag, featureFlagEvents } from "@/lib/flags";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 
 const convexClient = getConvexClient();
 
@@ -18,13 +19,15 @@ const TitleGeneration = async (
 
   if (!user?.id) throw new Error("User not found");
 
-  const openAI = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+  const google = createGoogleGenerativeAI({
+    apiKey: process.env.GEMINI_API_KEY,
   });
 
+  const model = google("gemini-1.5-flash");
+
   try {
-    const response = await openAI.chat.completions.create({
-      model: "gpt-4o-mini",
+    const response = streamText({
+      model,
       messages: [
         {
           role: "system",
@@ -37,12 +40,11 @@ const TitleGeneration = async (
           It should be SEO-friendly and 100 characters or less:\n\n${videoSummary}\n\n${considerations}`,
         },
       ],
+      maxTokens: 500,
       temperature: 0.7,
-      max_tokens: 500,
     });
 
-    const title =
-      response.choices[0]?.message?.content || "Unable to generate title";
+    const title = (await response.text) || "Unable to generate title";
 
     if (!title)
       return {

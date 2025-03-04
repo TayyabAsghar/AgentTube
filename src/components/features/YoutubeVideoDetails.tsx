@@ -1,15 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import { toast } from "sonner";
 import Spinner from "@/components/Spinner";
 import { useEffect, useState } from "react";
 import { VideoDetails } from "@/types/types";
-import { useToast } from "@/hooks/use-toast";
 import GetVideoDetails from "@/actions/GetVideoDetails";
 import { Calendar, Eye, MessageCircle, ThumbsUp } from "lucide-react";
 
 const YoutubeVideoDetails = ({ videoId }: { videoId: string }) => {
-  const { toast } = useToast();
   const [error, setError] = useState(false);
   const [video, setVideo] = useState<VideoDetails | null>(null);
 
@@ -18,11 +17,7 @@ const YoutubeVideoDetails = ({ videoId }: { videoId: string }) => {
       const response = await GetVideoDetails(videoId);
 
       if (response.error) {
-        toast({
-          variant: "destructive",
-          title: response.error.title,
-          description: response.error.description,
-        });
+        toast(response.error.description);
         setError(true);
       } else {
         setError(false);

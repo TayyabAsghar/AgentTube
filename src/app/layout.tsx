@@ -3,7 +3,7 @@ import Head from "next/head";
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import Header from "@/components/Header";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 import { Geist, Geist_Mono } from "next/font/google";
 import SuspenseLoader from "@/components/SuspenseLoader";
 import ClientWrapper from "@/components/wrappers/ClientWrapper";

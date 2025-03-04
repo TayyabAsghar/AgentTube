@@ -1,5 +1,7 @@
 "use Client";
 
+import { toast } from "sonner";
+import { useEffect, useRef } from "react";
 import { ToolPart } from "@/types/types";
 import { FeatureFlag } from "@/lib/flags";
 import ReactMarkdown from "react-markdown";
@@ -7,7 +9,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Message, useChat } from "@ai-sdk/react";
 import { useSchematicFlag } from "@schematichq/schematic-react";
-import { ArrowUp, ImageIcon, LetterText, PenIcon, Square } from "lucide-react";
+import {
+  ArrowUp,
+  BotIcon,
+  ImageIcon,
+  LetterText,
+  PenIcon,
+  Square,
+} from "lucide-react";
 
 interface AIAgentChatProps {
   videoId: string;
@@ -20,6 +29,8 @@ const formateToolInvocation = (part: ToolPart) => {
 };
 
 const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const messageContainerRef = useRef<HTMLDivElement>(null);
   const {
     input,
     status,
@@ -57,6 +68,47 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
     append(userMessage);
   };
 
+  useEffect(() => {
+    if (bottomRef.current && messageContainerRef.current) {
+      messageContainerRef.current.scrollTop =
+        messageContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  useEffect(() => {
+    let toastId;
+
+    switch (status) {
+      case "submitted":
+        toastId = toast.success("Agent is thinking...", {
+          id: toastId,
+          icon: <BotIcon className="size-4" />,
+        });
+        break;
+
+      case "streaming":
+        toastId = toast.success("Agent is replying...", {
+          id: toastId,
+          icon: <BotIcon className="size-4" />,
+        });
+        break;
+
+      case "error":
+        toastId = toast.error(
+          "Whoops! Something went wrong, please try again.",
+          {
+            id: toastId,
+            icon: <BotIcon className="size-4" />,
+          }
+        );
+        break;
+
+      case "ready":
+        toast.dismiss(toastId);
+        break;
+    }
+  }, [status]);
+
   const generateImage = async () => {
     const randomId = Math.random().toString(36).substring(2, 15);
     const userMessage: Message = {
@@ -89,7 +141,10 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
         <h2 className="text-lg font-semibold text-gray-800">AI Agent</h2>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 py-4">
+      <div
+        className="flex-1 overflow-y-auto px-4 py-4"
+        ref={messageContainerRef}
+      >
         <div className="space-y-6">
           {messages.length === 0 && (
             <div className="flex items-center justify-center h-full min-h-[200px]">
@@ -150,6 +205,7 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
               </div>
             </div>
           ))}
+          <div ref={bottomRef} />
         </div>
       </div>
 

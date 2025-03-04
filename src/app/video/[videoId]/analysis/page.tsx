@@ -1,22 +1,21 @@
 "use client";
 
+import { toast } from "sonner";
 import Usage from "@/components/Usage";
 import { useUser } from "@clerk/nextjs";
 import { FeatureFlag } from "@/lib/flags";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { useToast } from "@/hooks/use-toast";
 import AIAgentChat from "@/components/AIAgentChat";
 import { CreateOrGetVideo } from "@/actions/CreateOrGetVideo";
-import { Doc } from "../../../../../convex/_generated/dataModel";
 import Transcription from "@/components/features/Transcription";
+import { Doc } from "../../../../../convex/_generated/dataModel";
 import TitleGeneration from "@/components/features/TitleGeneration";
 import YoutubeVideoDetails from "@/components/features/YoutubeVideoDetails";
 import ThumbnailGeneration from "@/components/features/ThumbnailGeneration";
 
 const AnalysisPage = () => {
   const { user } = useUser();
-  const { toast } = useToast();
   const { videoId } = useParams<{ videoId: string }>();
   const [video, setVideo] = useState<Doc<"videos"> | null | undefined>(
     undefined
@@ -28,18 +27,12 @@ const AnalysisPage = () => {
     const fetchVideo = async () => {
       const response = await CreateOrGetVideo(videoId, user?.id);
 
-      if (!response.success)
-        toast({
-          itemID: "",
-          title: "Video Error",
-          description: response.error,
-          variant: "destructive",
-        });
+      if (!response.success) toast.error(response.error);
       else setVideo(response.data!);
     };
 
     fetchVideo();
-  }, [videoId, user, toast]);
+  }, [videoId, user]);
 
   const VideoTranscriptionStatus = () => {
     return video === undefined ? (

@@ -1,12 +1,12 @@
 "use client";
 
+import { toast } from "sonner";
+import { Copy } from "lucide-react";
 import Usage from "@/components/Usage";
 import { useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 import { FeatureFlag } from "@/lib/flags";
-import { useToast } from "@/hooks/use-toast";
 import { api } from "../../../convex/_generated/api";
-import { CheckCircleIcon, Copy } from "lucide-react";
 import { useSchematicEntitlement } from "@schematichq/schematic-react";
 
 interface TitleGenerationProps {
@@ -15,7 +15,6 @@ interface TitleGenerationProps {
 
 const TitleGeneration = ({ videoId }: TitleGenerationProps) => {
   const { user } = useUser();
-  const { toast } = useToast();
   const titles = useQuery(api.titles.list, { videoId, userId: user?.id ?? "" });
   const { value: isTitleGenerationEnabled } = useSchematicEntitlement(
     FeatureFlag.TITLE_GENERATIONS
@@ -23,18 +22,7 @@ const TitleGeneration = ({ videoId }: TitleGenerationProps) => {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
-    toast({
-      description: (
-        <div>
-          <h2 className="font-semibold text-md">
-            <span>
-              <CheckCircleIcon className="h-6 w-6 mr-2 text-green-500 inline" />
-            </span>
-            Copied to clipboard!
-          </h2>
-        </div>
-      ),
-    });
+    toast(" Copied to clipboard!");
   };
 
   return (

@@ -1,26 +1,20 @@
 "use client";
 
 import Form from "next/form";
+import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useFormStatus } from "react-dom";
-import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import AnalyzeYouTubeVideo from "@/actions/AnalyzeYouTubeVideo";
 
 const VideoForm = () => {
-  const { toast } = useToast();
   const { pending } = useFormStatus();
 
   const submitUrl = async (form: FormData) => {
     const response = await AnalyzeYouTubeVideo(form);
 
-    if (response?.error)
-      toast({
-        title: response?.error.title,
-        description: response?.error.description,
-        variant: "destructive",
-      });
+    if (response?.error) toast.error(response?.error.description);
   };
 
   return (

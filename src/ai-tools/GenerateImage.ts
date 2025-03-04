@@ -4,7 +4,7 @@ import { client } from "@/lib/schematics";
 import { FeatureFlag } from "@/lib/flags";
 import { DalleImageGeneration } from "@/actions/DalleImageGeneration";
 
-export const generateImage = (videoId: string, userId: string) =>
+const generateImage = (videoId: string, userId: string) =>
   tool({
     description: "Generate an image",
     parameters: z.object({
@@ -33,3 +33,5 @@ export const generateImage = (videoId: string, userId: string) =>
       return { image };
     },
   });
+
+export default generateImage;
