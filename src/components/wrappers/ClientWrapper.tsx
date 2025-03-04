@@ -1,8 +1,9 @@
 "use client";
 
+import { ThemeProvider } from "next-themes";
+import ConvexWrapper from "@/components/wrappers/ConvexWrapper";
 import { SchematicProvider } from "@schematichq/schematic-react";
 import SchematicWrapper from "@/components/wrappers/SchematicWrapper";
-import ConvexWrapper from "@/components/wrappers/ConvexWrapper";
 
 interface ClientWrapperProps {
   children: React.ReactNode;
@@ -15,11 +16,13 @@ const ClientWrapper = ({ children }: ClientWrapperProps) => {
     throw new Error("No Schematic Publishable Key found.");
 
   return (
-    <ConvexWrapper>
-      <SchematicProvider publishableKey={schematicPublishKey}>
-        <SchematicWrapper>{children}</SchematicWrapper>
-      </SchematicProvider>
-    </ConvexWrapper>
+    <ThemeProvider>
+      <ConvexWrapper>
+        <SchematicProvider publishableKey={schematicPublishKey}>
+          <SchematicWrapper>{children}</SchematicWrapper>
+        </SchematicProvider>
+      </ConvexWrapper>
+    </ThemeProvider>
   );
 };
 

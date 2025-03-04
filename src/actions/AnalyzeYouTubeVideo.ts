@@ -1,6 +1,5 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import getYouTubeVideoId from "@/lib/getYouTubeVideoId";
 
 const AnalyzeYouTubeVideo = async (form: FormData) => {
@@ -18,7 +17,7 @@ const AnalyzeYouTubeVideo = async (form: FormData) => {
       },
     };
 
-  redirect(`/video/${videoId}/analysis`);
+  return { videoId };
 };
 
 export default AnalyzeYouTubeVideo;

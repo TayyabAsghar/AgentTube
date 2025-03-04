@@ -43,10 +43,22 @@ export default function RootLayout({
         <ClientWrapper>
           <Suspense fallback={<SuspenseLoader />}>
             <Header />
-            <main className="w-full min-h-screen bg-accent/60 pt-18">
+            <main className="flex w-full min-h-screen bg-accent/60 pt-18">
+              {/* <div className="min-h-screen absolute top-0 w-full"> */}
               {children}
+              {/* </div> */}
             </main>
-            <Toaster />
+            <Toaster
+              visibleToasts={3}
+              toastOptions={{
+                classNames: {
+                  error: "!bg-destructive",
+                  success: "!bg-primary/80",
+                  icon: "!text-destructive-foreground",
+                  title: "!text-destructive-foreground",
+                },
+              }}
+            />
           </Suspense>
         </ClientWrapper>
       </body>

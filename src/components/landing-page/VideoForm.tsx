@@ -3,18 +3,32 @@
 import Form from "next/form";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
 import { useFormStatus } from "react-dom";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import AnalyzeYouTubeVideo from "@/actions/AnalyzeYouTubeVideo";
 
 const VideoForm = () => {
+  const router = useRouter();
+  const { isSignedIn } = useUser();
   const { pending } = useFormStatus();
 
   const submitUrl = async (form: FormData) => {
     const response = await AnalyzeYouTubeVideo(form);
 
+    console.log(response);
+
     if (response?.error) toast.error(response?.error.description);
+    else if (!response?.videoId) return;
+    else {
+      const url = `/video/${response.videoId}/analysis`;
+
+      if (!isSignedIn)
+        router.push(`/signin?redirect_url=${encodeURIComponent(url)}`);
+      else router.push(url);
+    }
   };
 
   return (

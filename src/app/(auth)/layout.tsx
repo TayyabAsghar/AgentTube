@@ -4,12 +4,8 @@ import { ClerkLoaded } from "@clerk/nextjs";
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <ClerkLoaded>
-      <main className="w-screen h-screen flex justify-center items-center">
-        <>
-          <BackgroundAnimation />
-          {children}
-        </>
-      </main>
+      <BackgroundAnimation />
+      <div className="w-full flex justify-center items-center">{children}</div>
     </ClerkLoaded>
   );
 };

@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
         protocol: "https",
       },
       {
-        hostname: "acoustic-orc-473.convex.cloud",
+        hostname: "groovy-llama-323.convex.cloud",
         protocol: "https",
       },
     ],

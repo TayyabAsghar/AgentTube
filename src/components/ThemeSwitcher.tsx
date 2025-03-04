@@ -3,7 +3,11 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
-const ThemeSwitcher = () => {
+interface ThemeSwitcherProps {
+  className?: string;
+}
+
+const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
@@ -37,7 +41,7 @@ const ThemeSwitcher = () => {
       variant="secondary"
       onClick={toggleTheme}
       tooltip={theme === "dark" ? "Light Mod" : "Dark Mod"}
-      className="rounded-lg p-2 cursor-pointer"
+      className={`rounded-lg p-2 cursor-pointer ${className}`}
     >
       <svg
         className="fill-violet-700 block dark:hidden"

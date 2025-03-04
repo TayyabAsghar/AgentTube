@@ -17,7 +17,7 @@ const YoutubeVideoDetails = ({ videoId }: { videoId: string }) => {
       const response = await GetVideoDetails(videoId);
 
       if (response.error) {
-        toast(response.error.description);
+        toast.error(response.error.description);
         setError(true);
       } else {
         setError(false);

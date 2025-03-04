@@ -3,7 +3,7 @@ import VideoForm from "@/components/landing-page/VideoForm";
 
 const HeroSection = () => {
   return (
-    <section className="py-20">
+    <section className="py-6">
       <div className=" container mx-auto px-4 mt-14">
         <div className="flex flex-col items-center gap-10 text-center mb-12">
           <AgentPulse size="medium" color="blue" />

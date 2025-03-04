@@ -7,7 +7,7 @@ import GoogleLogo from "@/components/icons/GoogleIcon";
 
 const SignInPage = () => {
   return (
-    <div className="grid w-full flex-grow items-center px-4 sm:justify-center">
+    <div className="grid h-full w-full flex-grow items-center px-4 sm:justify-center">
       <SignIn.Root fallback={<AgentPulse />}>
         <SignIn.Step
           name="start"

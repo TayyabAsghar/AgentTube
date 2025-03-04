@@ -22,7 +22,7 @@ const TitleGeneration = ({ videoId }: TitleGenerationProps) => {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
-    toast(" Copied to clipboard!");
+    toast.success(" Copied to clipboard!");
   };
 
   return (
