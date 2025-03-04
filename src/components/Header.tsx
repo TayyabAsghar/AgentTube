@@ -27,7 +27,7 @@ const Header = () => {
           <Link href="/#features">Features</Link>
         </Button>
         <Button asChild variant="ghost" tooltip="Pricing">
-          <Link href="/">Pricing</Link>
+          <Link href="/#pricing">Pricing</Link>
         </Button>
       </div>
 

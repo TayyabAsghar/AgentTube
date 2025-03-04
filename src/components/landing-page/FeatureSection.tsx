@@ -13,7 +13,8 @@ const FeatureSection = () => {
         {Features.map((feature, index) => (
           <div
             key={index}
-            className={`flex flex-col justify-start items-center md:p-8 lg:p-14 hover:shadow-xl
+            className={`flex flex-col justify-start items-center md:p-8 lg:p-14 hover:shadow-xl dark:hover:shadow-foreground/50
+              border-b md:border-b-transparent pb-8
                 ${index >= 3 ? "md:border-t md:border-gray-200" : ""} 
                 ${index % 3 !== 0 ? "md:border-l md:border-gray-200" : ""}`}
           >

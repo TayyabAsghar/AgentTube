@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
+import { ArrowRight } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
@@ -14,7 +15,9 @@ const DashboardButton = () => {
       {isSignedIn
         ? pathname === "/" && (
             <Button asChild tooltip="Dashboard">
-              <Link href="/dashboard">Dashboard</Link>
+              <Link href="/dashboard">
+                Dashboard <ArrowRight />
+              </Link>
             </Button>
           )
         : isLoaded && (
