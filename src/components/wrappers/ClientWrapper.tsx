@@ -16,7 +16,7 @@ const ClientWrapper = ({ children }: ClientWrapperProps) => {
     throw new Error("No Schematic Publishable Key found.");
 
   return (
-    <ThemeProvider>
+    <ThemeProvider attribute="class">
       <ConvexWrapper>
         <SchematicProvider publishableKey={schematicPublishKey}>
           <SchematicWrapper>{children}</SchematicWrapper>

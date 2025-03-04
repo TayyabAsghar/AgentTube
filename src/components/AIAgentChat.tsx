@@ -137,8 +137,8 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="hidden lg:block px-4 pb-3 border-b border-gray-100">
-        <h2 className="text-lg font-semibold text-gray-800">AI Agent</h2>
+      <div className="hidden lg:block px-4 pb-3 border-b border-muted-foreground">
+        <h2 className="text-lg font-semibold">AI Agent</h2>
       </div>
 
       <div
@@ -149,10 +149,10 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
           {messages.length === 0 && (
             <div className="flex items-center justify-center h-full min-h-[200px]">
               <div className="text-center space-y-2">
-                <h3 className="text-lg font-medium text-gray-700">
+                <h3 className="text-lg font-medium text-accent-foreground">
                   Welcome to AI Agent Chat
                 </h3>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-muted-foreground">
                   Ask any question about your video!
                 </p>
               </div>
@@ -209,7 +209,7 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
         </div>
       </div>
 
-      <div className="border-t border-gray-100 p-4 bg-white">
+      <div className="p-4 bg-background rounded-sm">
         <div className="space-y-3">
           <form onSubmit={handleSubmit} className="flex gap-2">
             <Input
@@ -230,17 +230,23 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
               <Button
                 size="icon"
                 type="submit"
-                disabled={!isVideoAnalysisEnabled}
+                className="cursor-pointer"
+                disabled={!input || !isVideoAnalysisEnabled}
               >
                 <ArrowUp />
               </Button>
             )}
           </form>
 
-          <div className="flex gap-2">
-            <button
-              className="text-xs xl:text-sm w-full flex items-center justify-center gap-2 py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-full
-    transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          <div className="flex flex-wrap justify-between items-center gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              tooltip={
+                isScriptGenerationEnabled
+                  ? "Generate Script"
+                  : "Upgrade to generate a script"
+              }
               onClick={generateScript}
               type="button"
               disabled={
@@ -256,12 +262,13 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
               ) : (
                 <span>Upgrade to generate a script</span>
               )}
-            </button>
+            </Button>
 
-            <button
-              className="text-xs xl:text-sm w-full flex items-center justify-center gap-2 py-2
-  px-4 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors
-  disabled:opacity-50 disabled:cursor-not-allowed"
+            <Button
+              size="sm"
+              variant="outline"
+              tooltip="Generate Title"
+              className="cursor-pointer disabled:cursor-not-allowed"
               onClick={generateTitle}
               type="button"
               disabled={
@@ -272,12 +279,13 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
             >
               <PenIcon className="w-4 h-4" />
               Generate Title
-            </button>
+            </Button>
 
-            <button
-              className="text-xs xl:text-sm w-full flex items-center justify-center gap-2 py-2
-  px-4 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors
-  disabled:opacity-50 disabled:cursor-not-allowed"
+            <Button
+              size="sm"
+              variant="outline"
+              tooltip="Generate Image"
+              className="cursor-pointer disabled:cursor-not-allowed"
               onClick={generateImage}
               type="button"
               disabled={
@@ -288,7 +296,7 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
             >
               <ImageIcon className="w-4 h-4" />
               Generate Image
-            </button>
+            </Button>
           </div>
         </div>
       </div>

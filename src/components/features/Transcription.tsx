@@ -49,14 +49,14 @@ const Transcription = ({ videoId }: TranscriptionProps) => {
           {transcript ? (
             transcript.transcript.map((entry, index) => (
               <div key={index} className="flex gap-2">
-                <span className="text-sm text-gray-400 min-w-[50px]">
+                <span className="text-sm text-muted-foreground min-w-[50px]">
                   {entry.timestamp}
                 </span>
-                <p className="text-sm text-gray-700">{entry.text}</p>
+                <p className="text-sm text-accent-foreground">{entry.text}</p>
               </div>
             ))
           ) : (
-            <p className="text-sm text-gray-500">No transcription available</p>
+            <p className="text-sm">No transcription available</p>
           )}
         </div>
       )}

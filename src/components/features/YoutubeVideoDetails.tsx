@@ -33,7 +33,7 @@ const YoutubeVideoDetails = ({ videoId }: { videoId: string }) => {
   if (!video || error) return <>Error is here</>;
 
   return (
-    <div className="@container bg-white rounded-xl">
+    <div className="@container bg-accent/60 rounded-xl">
       <div className="flex flex-col gap-8">
         <div className="flex-shrink-0">
           <Image
@@ -46,7 +46,7 @@ const YoutubeVideoDetails = ({ videoId }: { videoId: string }) => {
         </div>
 
         <div className="flex-grow space-y-4">
-          <h1 className="text-2xl @lg:text-3xl font-bold text-gray-900 leading-tight line-clamp-2">
+          <h1 className="text-2xl @lg:text-3xl font-bold leading-tight line-clamp-2">
             {video.title}
           </h1>
           <div className="flex items-center gap-4">
@@ -55,52 +55,52 @@ const YoutubeVideoDetails = ({ videoId }: { videoId: string }) => {
               alt={video.channel.title}
               width={48}
               height={48}
-              className="w-10 h-10 @md:w-12 @md:h-12 rounded-full border-2 border-gray-100"
+              className="w-10 h-10 @md:w-12 @md:h-12 rounded-full border-2"
             />
 
             <div>
-              <p className="text-base @md:text-lg font-semibold text-gray-900">
+              <p className="text-base @md:text-lg font-semibold">
                 {video.channel.title}
               </p>
-              <p className="text-sm @md:text-base text-gray-600">
+              <p className="text-sm @md:text-base text-muted-foreground">
                 {video.channel.subscribers} subscribers
               </p>
             </div>
           </div>
 
           <div className="grid grid-cols-2 @lg:grid-cols-4 gap-4 pt-4">
-            <div className="bg-gray-50 rounded-lg p-3 transition-all duration-300 hover:bg-gray-100">
+            <div className="bg-background rounded-lg p-3 transition-all duration-300 hover:bg-accent">
               <div className="flex items-center gap-2 mb-1">
-                <Calendar className="w-4 h-4 text-gray-600" />
-                <p className="text-sm text-gray-600">Published</p>
+                <Calendar className="w-4 h-4 text-muted-foreground" />
+                <p className="text-sm text-muted-foreground">Published</p>
               </div>
-              <p className="font-medium text-gray-900">
+              <p className="font-medium">
                 {new Date(video.publishedAt).toLocaleDateString()}
               </p>
             </div>
 
-            <div className="bg-gray-50 rounded-lg p-3 transition-all duration-300 hover:bg-gray-100">
+            <div className="bg-background rounded-lg p-3 transition-all duration-300 hover:bg-accent">
               <div className="flex items-center gap-2 mb-1">
-                <Eye className="w-4 h-4 text-gray-600" />
-                <p className="text-sm text-gray-600">Views</p>
+                <Eye className="w-4 h-4 text-muted-foreground" />
+                <p className="text-sm text-muted-foreground">Views</p>
               </div>
-              <p className="font-medium text-gray-900">{video.views}</p>
+              <p className="font-medium">{video.views}</p>
             </div>
 
-            <div className="bg-gray-50 rounded-lg p-3 transition-all duration-300 hover:bg-gray-100">
+            <div className="bg-background rounded-lg p-3 transition-all duration-300 hover:bg-accent">
               <div className="flex items-center gap-2 mb-1">
-                <ThumbsUp className="w-4 h-4 text-gray-600" />
-                <p className="text-sm text-gray-600">Likes</p>
+                <ThumbsUp className="w-4 h-4 text-muted-foreground" />
+                <p className="text-sm text-muted-foreground">Likes</p>
               </div>
-              <p className="font-medium text-gray-900">{video.likes}</p>
+              <p className="font-medium">{video.likes}</p>
             </div>
 
-            <div className="bg-gray-50 rounded-lg p-3 transition-all duration-300 hover:bg-gray-100">
+            <div className="bg-background rounded-lg p-3 transition-all duration-300 hover:bg-accent">
               <div className="flex items-center gap-2 mb-1">
-                <MessageCircle className="w-4 h-4 text-gray-600" />
-                <p className="text-sm text-gray-600">Comments</p>
+                <MessageCircle className="w-4 h-4 text-muted-foreground" />
+                <p className="text-sm text-muted-foreground">Comments</p>
               </div>
-              <p className="font-medium text-gray-900">{video.comments}</p>
+              <p className="font-medium">{video.comments}</p>
             </div>
           </div>
         </div>

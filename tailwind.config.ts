@@ -1,4 +1,3 @@
-import colors from "tailwindcss/colors";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -10,9 +9,7 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      color: {
-        primary: colors.blue,
-      },
+      colors: {},
     },
   },
   plugins: [],

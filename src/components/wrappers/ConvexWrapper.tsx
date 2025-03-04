@@ -15,7 +15,7 @@ export const convex = new ConvexReactClient(
 
 const ConvexWrapper = ({ children }: ConvexWrapperProps) => {
   return (
-    <ClerkProvider afterSignOutUrl="/">
+    <ClerkProvider afterSignOutUrl="/" signInUrl="/dashboard">
       <ConvexProviderWithClerk useAuth={useAuth} client={convex}>
         {children}
       </ConvexProviderWithClerk>

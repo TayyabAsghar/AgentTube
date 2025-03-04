@@ -43,11 +43,11 @@ export default function RootLayout({
         <ClientWrapper>
           <Suspense fallback={<SuspenseLoader />}>
             <Header />
+
             <main className="flex w-full min-h-screen bg-accent/60 pt-18">
-              {/* <div className="min-h-screen absolute top-0 w-full"> */}
               {children}
-              {/* </div> */}
             </main>
+
             <Toaster
               visibleToasts={3}
               toastOptions={{
