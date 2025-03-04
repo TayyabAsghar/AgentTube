@@ -1,3 +1,5 @@
+"use server";
+
 import { Innertube } from "youtubei.js";
 import { client } from "@/lib/schematics";
 import { ConvexHttpClient } from "convex/browser";

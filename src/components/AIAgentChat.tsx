@@ -1,11 +1,13 @@
 "use Client";
 
-import { ArrowUp } from "lucide-react";
-import { useChat } from "@ai-sdk/react";
 import { ToolPart } from "@/types/types";
+import { FeatureFlag } from "@/lib/flags";
 import ReactMarkdown from "react-markdown";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Message, useChat } from "@ai-sdk/react";
+import { useSchematicFlag } from "@schematichq/schematic-react";
+import { ArrowUp, ImageIcon, LetterText, PenIcon, Square } from "lucide-react";
 
 interface AIAgentChatProps {
   videoId: string;
@@ -18,10 +20,68 @@ const formateToolInvocation = (part: ToolPart) => {
 };
 
 const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
+  const {
+    input,
+    status,
+    messages,
+    stop,
+    append,
+    handleSubmit,
+    handleInputChange,
+  } = useChat({
     maxSteps: 5,
     body: { videoId },
   });
+
+  const isScriptGenerationEnabled = useSchematicFlag(
+    FeatureFlag.SCRIPT_GENERATION
+  );
+  const isImageGenerationEnabled = useSchematicFlag(
+    FeatureFlag.IMAGE_GENERATION
+  );
+  const isTitleGenerationEnabled = useSchematicFlag(
+    FeatureFlag.TITLE_GENERATIONS
+  );
+  const isVideoAnalysisEnabled = useSchematicFlag(FeatureFlag.VIDEO_ANALYSIS);
+
+  const generateScript = async () => {
+    const randomId = Math.random().toString(36).substring(2, 15);
+
+    const userMessage: Message = {
+      id: `generate-script-${randomId}`,
+      role: "user",
+      content: `Generate a step-by-step shooting script for this video that I can use on my own channel to produce a video that is similar to this 
+      one. Don't do any other steps such as generating an image, just generate the script only!`,
+    };
+
+    append(userMessage);
+  };
+
+  const generateImage = async () => {
+    const randomId = Math.random().toString(36).substring(2, 15);
+    const userMessage: Message = {
+      id: `generate-image-${randomId}`,
+      role: "user",
+      content: "Generate a thumbnail for this video",
+    };
+
+    append(userMessage);
+  };
+
+  const generateTitle = async () => {
+    const randomId = Math.random().toString(36).substring(2, 15);
+    const userMessage: Message = {
+      id: `generate-title-${randomId}`,
+      role: "user",
+      content: "Generate a title for this video",
+    };
+
+    append(userMessage);
+  };
+
+  const cancelRequest = () => {
+    stop();
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -100,12 +160,80 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
               type="text"
               value={input}
               onChange={handleInputChange}
-              placeholder="Ask anything about the video"
+              placeholder={
+                isVideoAnalysisEnabled
+                  ? "Ask anything about the video"
+                  : "Upgrade to ask anything about the video"
+              }
             />
-            <Button type="submit" size="icon">
-              <ArrowUp />
-            </Button>
+            {status === "streaming" || status === "submitted" ? (
+              <Button size="icon" type="button" onClick={cancelRequest}>
+                <Square />
+              </Button>
+            ) : (
+              <Button
+                size="icon"
+                type="submit"
+                disabled={!isVideoAnalysisEnabled}
+              >
+                <ArrowUp />
+              </Button>
+            )}
           </form>
+
+          <div className="flex gap-2">
+            <button
+              className="text-xs xl:text-sm w-full flex items-center justify-center gap-2 py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-full
+    transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={generateScript}
+              type="button"
+              disabled={
+                status === "streaming" ||
+                status === "submitted" ||
+                !isScriptGenerationEnabled
+              }
+            >
+              <LetterText className="w-4 h-4" />
+
+              {isScriptGenerationEnabled ? (
+                <span>Generate Script</span>
+              ) : (
+                <span>Upgrade to generate a script</span>
+              )}
+            </button>
+
+            <button
+              className="text-xs xl:text-sm w-full flex items-center justify-center gap-2 py-2
+  px-4 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors
+  disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={generateTitle}
+              type="button"
+              disabled={
+                status === "streaming" ||
+                status === "submitted" ||
+                !isTitleGenerationEnabled
+              }
+            >
+              <PenIcon className="w-4 h-4" />
+              Generate Title
+            </button>
+
+            <button
+              className="text-xs xl:text-sm w-full flex items-center justify-center gap-2 py-2
+  px-4 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors
+  disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={generateImage}
+              type="button"
+              disabled={
+                status === "streaming" ||
+                status === "submitted" ||
+                !isImageGenerationEnabled
+              }
+            >
+              <ImageIcon className="w-4 h-4" />
+              Generate Image
+            </button>
+          </div>
         </div>
       </div>
     </div>

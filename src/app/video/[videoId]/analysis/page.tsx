@@ -77,9 +77,9 @@ const AnalysisPage = () => {
               featureFlag={FeatureFlag.VIDEO_ANALYSIS}
               title="Analyze Video"
             />
-          </div>
 
-          <VideoTranscriptionStatus />
+            <VideoTranscriptionStatus />
+          </div>
 
           <YoutubeVideoDetails videoId={videoId} />
 

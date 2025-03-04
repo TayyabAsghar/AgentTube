@@ -13,12 +13,12 @@ const DashboardButton = () => {
     <>
       {isSignedIn
         ? pathname === "/" && (
-            <Button asChild>
+            <Button asChild tooltip="Dashboard">
               <Link href="/dashboard">Dashboard</Link>
             </Button>
           )
         : isLoaded && (
-            <Button asChild>
+            <Button asChild tooltip="Sign in">
               <Link href="/signin">Sign in</Link>
             </Button>
           )}

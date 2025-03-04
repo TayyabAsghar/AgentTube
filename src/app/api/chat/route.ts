@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import GetVideoDetails from "@/actions/GetVideoDetails";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import fetchTranscript from "@/ai-tools/FetchTranscript";
+import { generateImage } from "@/ai-tools/GenerateImage";
 
 export const POST = async (req: NextRequest) => {
   const user = await currentUser();
@@ -35,7 +36,10 @@ export const POST = async (req: NextRequest) => {
   const result = streamText({
     model,
     messages: [{ role: "system", content: systemMessage }, ...messages],
-    tools: { fetchTranscript },
+    tools: {
+      fetchTranscript: fetchTranscript,
+      generateImage: generateImage(videoId, user.id),
+    },
   });
 
   return result.toDataStream();

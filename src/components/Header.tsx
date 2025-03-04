@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import AgentPulse from "@/components/AgentPulse";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { SignedIn, UserButton } from "@clerk/nextjs";
-import DashboardButton from "./DashboardButton";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
+import DashboardButton from "@/components/DashboardButton";
 
 const Header = () => {
   return (
@@ -22,10 +22,10 @@ const Header = () => {
       </h1>
 
       <div className="flex items-center justify-center gap-3 opacity-80">
-        <Button asChild variant="ghost">
-          <Link href="#features">Features</Link>
+        <Button asChild variant="ghost" tooltip="Features">
+          <Link href="/#features">Features</Link>
         </Button>
-        <Button asChild variant="ghost">
+        <Button asChild variant="ghost" tooltip="Pricing">
           <Link href="/">Pricing</Link>
         </Button>
       </div>
@@ -34,7 +34,7 @@ const Header = () => {
         <ThemeSwitcher />
 
         <SignedIn>
-          <Button asChild variant="outline">
+          <Button asChild variant="outline" tooltip="Manage Plan">
             <Link href="/manage-plan">Manage Plan</Link>
           </Button>
 
