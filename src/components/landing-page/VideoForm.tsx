@@ -18,9 +18,7 @@ const VideoForm = () => {
   const submitUrl = async (form: FormData) => {
     const response = await AnalyzeYouTubeVideo(form);
 
-    console.log(response);
-
-    if (response?.error) toast.error(response?.error.description);
+    if (response?.error) toast.success(response?.error.description);
     else if (!response?.videoId) return;
     else {
       const url = `/video/${response.videoId}/analysis`;

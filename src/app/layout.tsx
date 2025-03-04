@@ -53,7 +53,7 @@ export default function RootLayout({
               toastOptions={{
                 classNames: {
                   error: "!bg-destructive",
-                  success: "!bg-primary/80",
+                  success: "!bg-green-600",
                   icon: "!text-destructive-foreground",
                   title: "!text-destructive-foreground",
                 },

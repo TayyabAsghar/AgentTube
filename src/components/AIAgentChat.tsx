@@ -1,8 +1,8 @@
 "use Client";
 
 import { toast } from "sonner";
-import { useEffect, useRef } from "react";
 import { ToolPart } from "@/types/types";
+import { useEffect, useRef } from "react";
 import { FeatureFlag } from "@/lib/flags";
 import ReactMarkdown from "react-markdown";
 import { Input } from "@/components/ui/input";
@@ -10,12 +10,12 @@ import { Button } from "@/components/ui/button";
 import { Message, useChat } from "@ai-sdk/react";
 import { useSchematicFlag } from "@schematichq/schematic-react";
 import {
+  Square,
   ArrowUp,
   BotIcon,
+  PenIcon,
   ImageIcon,
   LetterText,
-  PenIcon,
-  Square,
 } from "lucide-react";
 
 interface AIAgentChatProps {
@@ -132,7 +132,16 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
   };
 
   const cancelRequest = () => {
+    const randomId = Math.random().toString(36).substring(2, 15);
+
     stop();
+    const userMessage: Message = {
+      id: `cancel-message-${randomId}`,
+      role: "assistant",
+      content: "Chat canceled by the user.",
+    };
+
+    append(userMessage);
   };
 
   return (
@@ -165,26 +174,26 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
               className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[85%] ${m.role === "user" ? "bg-blue-300" : "bg-gray-100"} rounded-2xl px-4 py-3`}
+                className={`max-w-[85%] ${m.role === "user" ? "bg-primary/80" : "bg-background"} rounded-2xl px-4 py-3`}
               >
                 {m.parts && m.role === "assistant" ? (
                   <div className="space-y-3">
                     {m.parts.map((part, i) =>
                       part.type === "text" ? (
-                        <div key={i} className="prose prose-sm max-w-none">
+                        <div
+                          key={i}
+                          className="prose prose-sm max-w-none text-foreground"
+                        >
                           <ReactMarkdown>{m.content}</ReactMarkdown>
                         </div>
                       ) : (
                         part.type === "tool-invocation" && (
-                          <div
-                            key={i}
-                            className="bg-white/50 rounded-lg p-2 space-y-2 text-gray-800"
-                          >
+                          <div key={i} className="rounded-lg p-2 space-y-2">
                             <div className="font-medium text-xs">
                               {formateToolInvocation(part as ToolPart)}
                             </div>
                             {(part as ToolPart).toolInvocation.result && (
-                              <pre className="text-xs bg-white/75 p-2 rounded overflow-auto max-h-40">
+                              <pre className="text-xs bg-accent text-accent-foreground p-2 rounded overflow-auto max-h-[520px]">
                                 {JSON.stringify(
                                   (part as ToolPart).toolInvocation.result,
                                   null,
@@ -198,7 +207,7 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
                     )}
                   </div>
                 ) : (
-                  <div className="prose prose-sm max-w-none text-white">
+                  <div className="prose prose-sm max-w-none text-primary-foreground">
                     <ReactMarkdown>{m.content}</ReactMarkdown>
                   </div>
                 )}
@@ -223,7 +232,13 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
               }
             />
             {status === "streaming" || status === "submitted" ? (
-              <Button size="icon" type="button" onClick={cancelRequest}>
+              <Button
+                size="icon"
+                type="button"
+                tooltip="Stop"
+                onClick={cancelRequest}
+                className="cursor-pointer"
+              >
                 <Square />
               </Button>
             ) : (
