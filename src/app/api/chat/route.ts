@@ -46,5 +46,5 @@ export const POST = async (req: NextRequest) => {
     },
   });
 
-  return result.toDataStream();
+  return result.toDataStreamResponse();
 };
