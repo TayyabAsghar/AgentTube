@@ -2,9 +2,11 @@ import { streamText } from "ai";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 import GetVideoDetails from "@/actions/GetVideoDetails";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import fetchTranscript from "@/ai-tools/FetchTranscript";
 import { generateImage } from "@/ai-tools/GenerateImage";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { getVideoDetails } from "@/ai-tools/GetVideoDeatils";
+import generateTitle from "@/ai-tools/GenerateTitle";
 
 export const POST = async (req: NextRequest) => {
   const user = await currentUser();
@@ -38,6 +40,8 @@ export const POST = async (req: NextRequest) => {
     messages: [{ role: "system", content: systemMessage }, ...messages],
     tools: {
       fetchTranscript: fetchTranscript,
+      GetVideoDetails: getVideoDetails,
+      generateTitle: generateTitle(user.id),
       generateImage: generateImage(videoId, user.id),
     },
   });
