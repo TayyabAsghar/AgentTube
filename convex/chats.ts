@@ -62,3 +62,21 @@ export const getChatByUserAndVideo = query({
       .first();
   },
 });
+
+export const getChatsMetaDataByUser = query({
+  args: { userId: v.string() },
+  handler: async (ctx, args) => {
+    const chats = await ctx.db
+      .query("chats")
+      .withIndex("by_user_id", (q) => q.eq("userId", args.userId))
+      .collect();
+
+    return chats.map((chat) => {
+      return {
+        _id: chat._id,
+        videoId: chat.videoId,
+        title: chat.title,
+      };
+    });
+  },
+});

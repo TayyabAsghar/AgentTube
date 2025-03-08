@@ -2,6 +2,7 @@
 
 import Usage from "@/components/Usage";
 import { FeatureFlag } from "@/lib/flags";
+import Spinner from "@/components/Spinner";
 import { useCallback, useEffect, useState } from "react";
 import { GetYoutubeTranscript } from "@/actions/GetYoutubeTranscript";
 import { useSchematicEntitlement } from "@schematichq/schematic-react";
@@ -16,6 +17,7 @@ interface TranscriptionProps {
 }
 
 const Transcription = ({ videoId }: TranscriptionProps) => {
+  const [loading, setLoading] = useState(false);
   const [transcript, setTranscript] = useState<{
     transcript: TranscriptEntry[];
     cache: string;
@@ -29,9 +31,11 @@ const Transcription = ({ videoId }: TranscriptionProps) => {
     async (videoId: string) => {
       if (featureUsageExceeded) return;
 
+      setLoading(true);
       const result = await GetYoutubeTranscript(videoId);
 
       setTranscript(result);
+      setLoading(false);
     },
     [featureUsageExceeded]
   );
@@ -46,7 +50,11 @@ const Transcription = ({ videoId }: TranscriptionProps) => {
 
       {!featureUsageExceeded && (
         <div className="flex flex-col gap-2 max-h-[250px] overflow-y-auto rounded-md p-4">
-          {transcript ? (
+          {loading ? (
+            <div className="w-full flex items-center justify-center">
+              <Spinner />
+            </div>
+          ) : transcript ? (
             transcript.transcript.map((entry, index) => (
               <div key={index} className="flex gap-2">
                 <span className="text-sm text-muted-foreground min-w-[50px]">
