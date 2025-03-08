@@ -3,14 +3,35 @@
 import Image from "next/image";
 import { toast } from "sonner";
 import Spinner from "@/components/Spinner";
+import { useMutation } from "convex/react";
 import { useEffect, useState } from "react";
 import { VideoDetails } from "@/types/types";
+import { api } from "../../../convex/_generated/api";
 import GetVideoDetails from "@/actions/GetVideoDetails";
 import { Calendar, Eye, MessageCircle, ThumbsUp } from "lucide-react";
 
-const YoutubeVideoDetails = ({ videoId }: { videoId: string }) => {
+interface YoutubeVideoDetailsProps {
+  userId: string;
+  videoId: string;
+}
+
+const YoutubeVideoDetails = ({ userId, videoId }: YoutubeVideoDetailsProps) => {
   const [error, setError] = useState(false);
+  const createChat = useMutation(api.chats.createChat);
   const [video, setVideo] = useState<VideoDetails | null>(null);
+
+  useEffect(() => {
+    const ensureChatExists = async () => {
+      if (video?.title)
+        await createChat({
+          videoId,
+          userId,
+          title: video?.title,
+        });
+    };
+
+    ensureChatExists();
+  }, [createChat, userId, video?.title, videoId]);
 
   useEffect(() => {
     const fetchVideoDetails = async () => {

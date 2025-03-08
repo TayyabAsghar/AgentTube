@@ -34,6 +34,8 @@ const AnalysisPage = () => {
     fetchVideo();
   }, [videoId, user]);
 
+  if (!user) return;
+
   const VideoTranscriptionStatus = () => {
     return video === undefined ? (
       <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-accent/60 border rounded-full">
@@ -74,7 +76,7 @@ const AnalysisPage = () => {
             <VideoTranscriptionStatus />
           </div>
 
-          <YoutubeVideoDetails videoId={videoId} />
+          <YoutubeVideoDetails videoId={videoId} userId={user.id} />
 
           <ThumbnailGeneration videoId={videoId} />
 
@@ -84,7 +86,7 @@ const AnalysisPage = () => {
         </div>
 
         <div className="order-1 lg:order-2 lg:sticky lg:top-20 h-[500px] md:h-[calc(100vh-6rem)]">
-          <AIAgentChat videoId={videoId} />
+          <AIAgentChat videoId={videoId} userId={user.id} />
         </div>
       </div>
     </div>

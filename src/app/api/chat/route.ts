@@ -28,7 +28,8 @@ export const POST = async (req: NextRequest) => {
   const model = google("gemini-1.5-flash");
 
   const systemMessage = `You are an AI agent ready to accept questions from the user about ONE specific video. The video ID in  question is 
-  ${videoId} but you'll refer to this as ${videoDetails.video.title || "Selected Video"}. Use emojis to make the conversation more engaging. If 
+  ${videoId} but you'll refer to this as ${videoDetails.video.title || "Selected Video"}. These are the vide details ${videoDetails} that you can 
+  use. Apart from that you have tools to use whenever needed. Use emojis to make the conversation more engaging. If 
   an error occurs, explain it to the user and ask them to try again later. If the error suggest the user upgrade, explain that they must upgrade 
   to use the feature, tell them to go to 'Manage Plan' in the header and upgrade. If users ask for transcript also provide summary of the 
   transcript. Look through the messages and if needed use appropriate tool for it like is user wants to generate tile for the video always invoke 

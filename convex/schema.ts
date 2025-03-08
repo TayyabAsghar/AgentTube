@@ -1,5 +1,6 @@
-import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
+import ChatType from "./types/chat.type";
+import { defineSchema, defineTable } from "convex/server";
 
 export default defineSchema({
   videos: defineTable({
@@ -37,6 +38,16 @@ export default defineSchema({
     videoId: v.string(),
     userId: v.string(),
     title: v.string(),
+  })
+    .index("by_user_id", ["userId"])
+    .index("by_video_id", ["videoId"])
+    .index("by_user_and_video", ["userId", "videoId"]),
+
+  chats: defineTable({
+    videoId: v.string(),
+    userId: v.string(),
+    title: v.string(),
+    messages: v.array(ChatType),
   })
     .index("by_user_id", ["userId"])
     .index("by_video_id", ["videoId"])

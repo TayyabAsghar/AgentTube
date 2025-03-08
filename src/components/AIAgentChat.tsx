@@ -5,9 +5,11 @@ import { ToolPart } from "@/types/types";
 import { useEffect, useRef } from "react";
 import { FeatureFlag } from "@/lib/flags";
 import ReactMarkdown from "react-markdown";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Message, useChat } from "@ai-sdk/react";
+import { api } from "../../convex/_generated/api";
+import { useQuery } from "convex/react";
+import { Textarea } from "@/components/ui/text-area";
 import { useSchematicFlag } from "@schematichq/schematic-react";
 import {
   Square,
@@ -19,6 +21,7 @@ import {
 } from "lucide-react";
 
 interface AIAgentChatProps {
+  userId: string;
   videoId: string;
 }
 
@@ -28,9 +31,14 @@ const formateToolInvocation = (part: ToolPart) => {
   return `🛠️ Tool Used: ${part.toolInvocation.toolName}`;
 };
 
-const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
+const AIAgentChat = ({ userId, videoId }: AIAgentChatProps) => {
   const bottomRef = useRef<HTMLDivElement>(null);
   const messageContainerRef = useRef<HTMLDivElement>(null);
+  const dbChat = useQuery(api.chats.getChatByUserAndVideo, {
+    userId,
+    videoId,
+  });
+
   const {
     input,
     status,
@@ -41,6 +49,7 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
     handleInputChange,
   } = useChat({
     maxSteps: 5,
+    initialMessages: dbChat?.messages.map((msg) => msg as Message) || [],
     body: { videoId },
   });
 
@@ -64,6 +73,41 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
       content: `Use Vide transcript and analyze it after that generate a step-by-step shooting script for this video that I can use on my own 
       channel to produce a video that is similar to this one. Don't do any other steps such as generating an image, just generate the script 
       only!`,
+    };
+
+    append(userMessage);
+  };
+
+  const generateImage = async () => {
+    const randomId = Math.random().toString(36).substring(2, 15);
+    const userMessage: Message = {
+      id: `generate-image-${randomId}`,
+      role: "user",
+      content: "Generate a thumbnail for this video",
+    };
+
+    append(userMessage);
+  };
+
+  const generateTitle = async () => {
+    const randomId = Math.random().toString(36).substring(2, 15);
+    const userMessage: Message = {
+      id: `generate-title-${randomId}`,
+      role: "user",
+      content: "Generate a title for this video",
+    };
+
+    append(userMessage);
+  };
+
+  const cancelRequest = () => {
+    const randomId = Math.random().toString(36).substring(2, 15);
+
+    stop();
+    const userMessage: Message = {
+      id: `cancel-message-${randomId}`,
+      role: "assistant",
+      content: "Chat canceled by the user.",
     };
 
     append(userMessage);
@@ -109,41 +153,6 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
         break;
     }
   }, [status]);
-
-  const generateImage = async () => {
-    const randomId = Math.random().toString(36).substring(2, 15);
-    const userMessage: Message = {
-      id: `generate-image-${randomId}`,
-      role: "user",
-      content: "Generate a thumbnail for this video",
-    };
-
-    append(userMessage);
-  };
-
-  const generateTitle = async () => {
-    const randomId = Math.random().toString(36).substring(2, 15);
-    const userMessage: Message = {
-      id: `generate-title-${randomId}`,
-      role: "user",
-      content: "Generate a title for this video",
-    };
-
-    append(userMessage);
-  };
-
-  const cancelRequest = () => {
-    const randomId = Math.random().toString(36).substring(2, 15);
-
-    stop();
-    const userMessage: Message = {
-      id: `cancel-message-${randomId}`,
-      role: "assistant",
-      content: "Chat canceled by the user.",
-    };
-
-    append(userMessage);
-  };
 
   return (
     <div className="flex flex-col h-full">
@@ -221,10 +230,14 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
 
       <div className="p-4 bg-background rounded-sm">
         <div className="space-y-3">
-          <form onSubmit={handleSubmit} className="flex gap-2">
-            <Input
-              type="text"
+          <form
+            onSubmit={handleSubmit}
+            className="flex gap-2 justify-center items-center"
+          >
+            <Textarea
+              rows={2}
               value={input}
+              className="resize-none"
               onChange={handleInputChange}
               placeholder={
                 isVideoAnalysisEnabled
