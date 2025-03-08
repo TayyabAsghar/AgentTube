@@ -1,12 +1,12 @@
 "use server";
 
-import { streamText } from "ai";
+import { generateText } from "ai";
 import { client } from "@/lib/schematics";
 import { getConvexClient } from "@/lib/convex";
 import { api } from "../../convex/_generated/api";
 import { currentUser } from "@clerk/nextjs/server";
-import { FeatureFlag, featureFlagEvents } from "@/lib/flags";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { FeatureFlag, featureFlagEvents } from "@/lib/flags";
 
 const convexClient = getConvexClient();
 
@@ -19,6 +19,13 @@ const TitleGeneration = async (
 
   if (!user?.id) throw new Error("User not found");
 
+  const titles = (
+    await convexClient.query(api.titles.list, {
+      videoId,
+      userId: user?.id ?? "",
+    })
+  ).map((item) => ({ title: item.title }));
+
   const google = createGoogleGenerativeAI({
     apiKey: process.env.GEMINI_API_KEY,
   });
@@ -26,7 +33,7 @@ const TitleGeneration = async (
   const model = google("gemini-1.5-flash");
 
   try {
-    const response = streamText({
+    const response = await generateText({
       model,
       messages: [
         {
@@ -37,14 +44,15 @@ const TitleGeneration = async (
         {
           role: "user",
           content: `Please provide ONE concise YouTube title (and nothing else) for this video. Focus on the main points and key takeaways. 
-          It should be SEO-friendly and 100 characters or less:\n\n${videoSummary}\n\n${considerations}`,
+          It should be SEO-friendly and 100 characters or less:\n\n${videoSummary}\n\n${considerations}\n\n Here are the list of previous 
+          titles you have created so you don't create same titles again:${titles}`,
         },
       ],
-      maxTokens: 500,
+      maxTokens: 200,
       temperature: 0.7,
     });
 
-    const title = (await response.text) || "Unable to generate title";
+    const title = response.text;
 
     if (!title)
       return {

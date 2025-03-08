@@ -61,8 +61,9 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
     const userMessage: Message = {
       id: `generate-script-${randomId}`,
       role: "user",
-      content: `Generate a step-by-step shooting script for this video that I can use on my own channel to produce a video that is similar to this 
-      one. Don't do any other steps such as generating an image, just generate the script only!`,
+      content: `Use Vide transcript and analyze it after that generate a step-by-step shooting script for this video that I can use on my own 
+      channel to produce a video that is similar to this one. Don't do any other steps such as generating an image, just generate the script 
+      only!`,
     };
 
     append(userMessage);
@@ -253,7 +254,7 @@ const AIAgentChat = ({ videoId }: AIAgentChatProps) => {
             )}
           </form>
 
-          <div className="flex flex-wrap justify-between items-center gap-2">
+          <div className="flex flex-wrap justify-between items-center gap-2 px-4">
             <Button
               size="sm"
               variant="outline"

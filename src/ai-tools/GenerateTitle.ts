@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { tool } from "ai";
-import TitleGeneration from "@/actions/TitleGeneration";
 import { client } from "@/lib/schematics";
 import { FeatureFlag } from "@/lib/flags";
+import TitleGeneration from "@/actions/TitleGeneration";
 
 const generateTitle = (userId: string) =>
   tool({
@@ -11,7 +11,9 @@ const generateTitle = (userId: string) =>
       videoId: z.string().describe("The video ID to generate a title for"),
       videoSummary: z
         .string()
-        .describe("The summary of the video to generate a title for"),
+        .describe(
+          "The summary of the video obtained from video details using video details or transcript tool to generate a title for"
+        ),
       considerations: z
         .string()
         .describe("Any additional considerations for the title"),
@@ -24,23 +26,28 @@ const generateTitle = (userId: string) =>
         },
       };
 
-      const isTitleGenerationEnabled = await client.checkFlag(
-        schematicCtx,
-        FeatureFlag.TITLE_GENERATIONS
-      );
+      try {
+        const isTitleGenerationEnabled = await client.checkFlag(
+          schematicCtx,
+          FeatureFlag.TITLE_GENERATIONS
+        );
 
-      if (!isTitleGenerationEnabled)
-        return {
-          error: "Title generation is not enabled, the user must upgrade.",
-        };
+        if (!isTitleGenerationEnabled)
+          return { error: "Title generation is not enabled. Please upgrade." };
 
-      const title = await TitleGeneration(
-        videoId,
-        videoSummary,
-        considerations
-      );
+        const titleResult = await TitleGeneration(
+          videoId,
+          videoSummary,
+          considerations
+        );
 
-      return { title };
+        if (titleResult?.error || !titleResult.title)
+          return { error: "Failed to generate title. Please try again." };
+
+        return { title: titleResult.title };
+      } catch {
+        return { error: "Unexpected error in title generation. Try again" };
+      }
     },
   });
 

@@ -33,7 +33,7 @@ const YoutubeVideoDetails = ({ videoId }: { videoId: string }) => {
   if (!video || error) return <>Error is here</>;
 
   return (
-    <div className="@container bg-accent/60 rounded-xl">
+    <div className="@container rounded-xl">
       <div className="flex flex-col gap-8">
         <div className="flex-shrink-0">
           <Image
@@ -69,7 +69,7 @@ const YoutubeVideoDetails = ({ videoId }: { videoId: string }) => {
           </div>
 
           <div className="grid grid-cols-2 @lg:grid-cols-4 gap-4 pt-4">
-            <div className="bg-background rounded-lg p-3 transition-all duration-300 hover:bg-accent">
+            <div className="bg-accent/60 rounded-lg p-3 transition-all duration-300 hover:bg-accent">
               <div className="flex items-center gap-2 mb-1">
                 <Calendar className="w-4 h-4 text-muted-foreground" />
                 <p className="text-sm text-muted-foreground">Published</p>
@@ -79,7 +79,7 @@ const YoutubeVideoDetails = ({ videoId }: { videoId: string }) => {
               </p>
             </div>
 
-            <div className="bg-background rounded-lg p-3 transition-all duration-300 hover:bg-accent">
+            <div className="bg-accent/60 rounded-lg p-3 transition-all duration-300 hover:bg-accent">
               <div className="flex items-center gap-2 mb-1">
                 <Eye className="w-4 h-4 text-muted-foreground" />
                 <p className="text-sm text-muted-foreground">Views</p>
@@ -87,7 +87,7 @@ const YoutubeVideoDetails = ({ videoId }: { videoId: string }) => {
               <p className="font-medium">{video.views}</p>
             </div>
 
-            <div className="bg-background rounded-lg p-3 transition-all duration-300 hover:bg-accent">
+            <div className="bg-accent/60 rounded-lg p-3 transition-all duration-300 hover:bg-accent">
               <div className="flex items-center gap-2 mb-1">
                 <ThumbsUp className="w-4 h-4 text-muted-foreground" />
                 <p className="text-sm text-muted-foreground">Likes</p>
@@ -95,7 +95,7 @@ const YoutubeVideoDetails = ({ videoId }: { videoId: string }) => {
               <p className="font-medium">{video.likes}</p>
             </div>
 
-            <div className="bg-background rounded-lg p-3 transition-all duration-300 hover:bg-accent">
+            <div className="bg-accent/60 rounded-lg p-3 transition-all duration-300 hover:bg-accent">
               <div className="flex items-center gap-2 mb-1">
                 <MessageCircle className="w-4 h-4 text-muted-foreground" />
                 <p className="text-sm text-muted-foreground">Comments</p>
