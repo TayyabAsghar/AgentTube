@@ -30,7 +30,7 @@ const generateImage = (videoId: string, userId: string) =>
         };
 
       const image = await DalleImageGeneration(prompt, videoId);
-      return { image };
+      return { error: image.error };
     },
   });
 

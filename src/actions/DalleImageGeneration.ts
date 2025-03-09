@@ -1,69 +1,76 @@
 "use server";
 
-import OpenAI from "openai";
-import { client } from "@/lib/schematics";
-import { getConvexClient } from "@/lib/convex";
-import { api } from "../../convex/_generated/api";
+// import OpenAI from "openai";
+// import { client } from "@/lib/schematics";
+// import { getConvexClient } from "@/lib/convex";
+// import { api } from "../../convex/_generated/api";
 import { currentUser } from "@clerk/nextjs/server";
-import { FeatureFlag, featureFlagEvents } from "@/lib/flags";
+// import { FeatureFlag, featureFlagEvents } from "@/lib/flags";
 
-const IMAGE_SIZE = "1792x1024";
-const convexClient = getConvexClient();
+// const IMAGE_SIZE = "1792x1024";
+// const convexClient = getConvexClient();
 
 export const DalleImageGeneration = async (prompt: string, videoId: string) => {
   const user = await currentUser();
 
   if (!user?.id) throw new Error("User not found.");
 
-  const openAi = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  // const openAi = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
   if (!prompt) throw new Error("Failed to create image prompt.");
 
-  const imageResponse = await openAi.images.generate({
-    n: 1,
-    prompt,
-    style: "vivid",
-    size: IMAGE_SIZE,
-    model: "dall-e-3",
-    quality: "standard",
-  });
+  console.log(videoId);
 
-  const imageUrl = imageResponse.data[0]?.url;
+  return {
+    error:
+      "Admin OpenAI tokens to generate image has reached it limit. Image can't be generated contact support for that.",
+  }; //
 
-  if (!imageUrl) throw new Error("Failed to generate image.");
+  // const imageResponse = await openAi.images.generate({
+  //   n: 1,
+  //   prompt,
+  //   style: "vivid",
+  //   size: IMAGE_SIZE,
+  //   model: "dall-e-3",
+  //   quality: "standard",
+  // });
 
-  const image: Blob = await fetch(imageUrl).then((res) => res.blob());
+  // const imageUrl = imageResponse.data[0]?.url;
 
-  const postUrl = await convexClient.mutation(api.images.generateUploadUrl);
+  // if (!imageUrl) throw new Error("Failed to generate image.");
 
-  const result = await fetch(postUrl, {
-    body: image,
-    method: "POST",
-    headers: { "Content-Type": image.type },
-  });
+  // const image: Blob = await fetch(imageUrl).then((res) => res.blob());
 
-  const { storageId } = await result.json();
+  // const postUrl = await convexClient.mutation(api.images.generateUploadUrl);
 
-  await convexClient.mutation(api.images.storeImage, {
-    storageId: storageId,
-    videoId,
-    userId: user.id,
-  });
+  // const result = await fetch(postUrl, {
+  //   body: image,
+  //   method: "POST",
+  //   headers: { "Content-Type": image.type },
+  // });
 
-  const dbImageUrl = await convexClient.query(api.images.getImage, {
-    videoId,
-    userId: user.id,
-  });
+  // const { storageId } = await result.json();
 
-  await client.track({
-    event: featureFlagEvents[FeatureFlag.IMAGE_GENERATION].event,
-    company: {
-      id: user.id,
-    },
-    user: {
-      id: user.id,
-    },
-  });
+  // await convexClient.mutation(api.images.storeImage, {
+  //   storageId: storageId,
+  //   videoId,
+  //   userId: user.id,
+  // });
 
-  return { imageUrl: dbImageUrl };
+  // const dbImageUrl = await convexClient.query(api.images.getImage, {
+  //   videoId,
+  //   userId: user.id,
+  // });
+
+  // await client.track({
+  //   event: featureFlagEvents[FeatureFlag.IMAGE_GENERATION].event,
+  //   company: {
+  //     id: user.id,
+  //   },
+  //   user: {
+  //     id: user.id,
+  //   },
+  // });
+
+  // return { imageUrl: dbImageUrl };
 };

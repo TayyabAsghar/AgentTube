@@ -4,12 +4,14 @@ import Link from "next/link";
 import { useQuery } from "convex/react";
 import { useUser } from "@clerk/nextjs";
 import Spinner from "@/components/Spinner";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { api } from "../../convex/_generated/api";
 import { PanelLeftClose, PanelRightClose, SquarePlus } from "lucide-react";
 
 const Sider = () => {
+  const params = useParams();
   const { user } = useUser();
   const [open, setOpen] = useState(false);
   const [chatsData, setChatsData] = useState<
@@ -37,7 +39,7 @@ const Sider = () => {
         <Button
           variant="outline"
           onClick={toggleSider}
-          className="cursor-pointer"
+          className="cursor-pointer border border-black dark:border-white"
           tooltip={open ? "Close" : "Open"}
         >
           {open ? <PanelLeftClose /> : <PanelRightClose />}
@@ -68,7 +70,7 @@ const Sider = () => {
                 variant="outline"
                 key={chat.videoId}
                 tooltip={chat.title}
-                className="cursor-pointer"
+                className={`cursor-pointer ${params.videoId === chat.videoId ? "" : "opacity-80"}`}
               >
                 <Link
                   href={`/video/${chat.videoId}/analysis`}
