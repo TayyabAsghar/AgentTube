@@ -194,7 +194,7 @@ const AIAgentChat = ({ userId, videoId }: AIAgentChatProps) => {
                           key={i}
                           className="prose prose-sm max-w-none text-foreground"
                         >
-                          <ReactMarkdown>{m.content}</ReactMarkdown>
+                          <ReactMarkdown>{part.text}</ReactMarkdown>
                         </div>
                       ) : (
                         part.type === "tool-invocation" && (
